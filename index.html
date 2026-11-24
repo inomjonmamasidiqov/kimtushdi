@@ -1,114 +1,108 @@
 <!DOCTYPE html>
-<html lang="uz">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sizga kim tushdi? 🎁</title>
+<html lang="uz"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Maxfiy Sovg'a 🎁</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-:root{--bg:#fff5e6;--bg2:#ffd6e8;--ink:#2b1b3d;--card:#ffffffcc;--accent:#ff3d81;--accent2:#7c4dff;--muted:#6b5b7b}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1030;--bg2:#3a1450;--ink:#fff3fb;--card:#ffffff18;--accent:#ff5c9a;--accent2:#9d7bff;--muted:#c9b8dd}}
-*{box-sizing:border-box}
-html,body{height:100%;margin:0}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg),var(--bg2));overflow:hidden;display:flex;align-items:center;justify-content:center}
-.wrap{width:min(92vw,440px);text-align:center;position:relative;z-index:2}
-h1{font-size:2rem;margin:0 0 6px;line-height:1.1}
-p.sub{margin:0 0 18px;color:var(--muted)}
-.card{background:var(--card);backdrop-filter:blur(8px);border-radius:24px;padding:18px;box-shadow:0 10px 40px #0002}
-textarea{width:100%;height:92px;border:2px dashed var(--accent2);border-radius:14px;padding:10px;font:inherit;background:transparent;color:var(--ink);resize:none}
-button{font:inherit;cursor:pointer;border:0}
-#go{margin-top:14px;width:100%;padding:18px;font-size:1.3rem;font-weight:800;color:#fff;border-radius:18px;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 8px 24px #ff3d8155;animation:pulse 1.6s infinite}
-#go:active{transform:scale(.96)}
-@keyframes pulse{50%{transform:scale(1.04)}}
-.fly{position:fixed;z-index:1;font-weight:800;font-size:1.4rem;padding:8px 14px;border-radius:30px;color:#fff;white-space:nowrap;pointer-events:none;box-shadow:0 4px 14px #0003}
-#res{display:none;margin-top:6px}
-#res .who{font-size:2.6rem;font-weight:900;margin:8px 0;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;animation:pop .6s cubic-bezier(.2,2,.4,1)}
-@keyframes pop{from{transform:scale(0) rotate(-20deg)}}
-.joke{color:var(--muted);margin:0 0 14px;min-height:1.4em}
-.row{display:flex;gap:8px}
-.row button{flex:1;padding:12px;border-radius:14px;font-weight:700;color:var(--ink);background:var(--card);border:2px solid var(--accent2)}
-canvas{position:fixed;inset:0;pointer-events:none;z-index:3}
-</style>
-</head>
-<body>
+:root{--a:#ff3d81;--b:#7c4dff;--y:#ffd93d;--g:#00e0a0}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#fff;overflow:hidden;background:radial-gradient(circle at 20% 10%,#4a1a7a,transparent 55%),radial-gradient(circle at 85% 90%,#8a1f55,transparent 50%),#1b0b33;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+main{height:100%;display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
+.scr{display:none;width:min(92vw,440px);text-align:center;max-height:100%;overflow-y:auto;padding:14px 0}
+.scr.on{display:block;animation:in .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes in{from{opacity:0;transform:translateY(30px) scale(.94)}}
+.gift{font-size:96px;display:inline-block;animation:bounce 1.5s infinite;filter:drop-shadow(0 10px 20px #ff3d8188)}
+@keyframes bounce{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-18px) rotate(6deg)}}
+h1{font-size:2.3rem;margin:8px 0 4px;line-height:1.1;background:linear-gradient(90deg,var(--y),var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+h2{font-size:1.7rem;margin:0 0 6px}
+p{color:#d9c8f0;margin:6px 0 16px;line-height:1.45}
+.btn{display:block;width:100%;border:0;padding:17px;font:inherit;font-size:1.2rem;font-weight:800;color:#fff;border-radius:18px;cursor:pointer;background:linear-gradient(90deg,var(--a),var(--b));box-shadow:0 8px 28px #ff3d8160;animation:pl 1.8s infinite}
+.btn.alt{background:#ffffff1c;box-shadow:none;animation:none;margin-top:10px;font-size:1rem;padding:13px}
+.btn:active{transform:scale(.96)}
+@keyframes pl{50%{transform:scale(1.04)}}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.chip{border:2px solid #ffffff30;background:#ffffff14;color:#fff;font:inherit;font-weight:700;font-size:1.05rem;padding:14px 6px;border-radius:16px;cursor:pointer;backdrop-filter:blur(6px);transition:.15s}
+.chip:active{transform:scale(.93);background:var(--b)}
+#slot{font-size:2.6rem;font-weight:900;min-height:1.3em;margin:14px 0;color:var(--y);text-shadow:0 0 30px #ffd93d99;position:relative;z-index:5}
+#slot.lock{animation:pop .6s cubic-bezier(.2,2,.4,1)}
+@keyframes pop{from{transform:scale(.3) rotate(-15deg)}}
+.rname{font-size:3rem;font-weight:900;margin:6px 0 4px;background:linear-gradient(90deg,var(--y),var(--g),var(--a));-webkit-background-clip:text;background-clip:text;color:transparent;animation:pop .8s cubic-bezier(.2,2,.4,1)}
+.card{background:#ffffff14;border:1px solid #ffffff26;border-radius:26px;padding:22px 16px;backdrop-filter:blur(10px)}
+.secret{display:inline-block;margin:6px 0 14px;padding:6px 14px;border-radius:30px;background:#ffd93d22;color:var(--y);font-weight:700;font-size:.9rem}
+#modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:20;padding:20px}
+#modal.on{display:flex}
+#modal .card{background:#2a1250;width:min(90vw,380px);animation:in .3s}
+.row{display:flex;gap:10px}.row .btn{animation:none;font-size:1.05rem}
+.fly{position:fixed;left:0;top:0;z-index:1;font-weight:800;font-size:1.3rem;padding:8px 16px;border-radius:30px;color:#1b0b33;white-space:nowrap;pointer-events:none;box-shadow:0 4px 16px #0005}
+.fl{position:fixed;bottom:-40px;z-index:0;opacity:.5;animation:up linear forwards;pointer-events:none}
+@keyframes up{to{transform:translateY(-115vh) rotate(360deg)}}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:10}
+.lbl{font-size:1.1rem;color:#d9c8f0;font-weight:600}
+</style></head><body>
 <canvas id="cv"></canvas>
-<div class="wrap">
-  <div id="main">
-    <h1>Sizga kim tushdi? 🎁</h1>
-    <p class="sub">Ismlarni yozing (vergul bilan) va tugmani bosing!</p>
-    <div class="card">
-      <textarea id="names">Ali, Vali, Sardor, Dilnoza, Madina, Jasur, Aziza, Bobur</textarea>
-      <button id="go">🎲 BOSING!</button>
-    </div>
-  </div>
-  <div id="res" class="card">
-    <div>Sizga tushdi... 🥁</div>
-    <div class="who" id="who"></div>
-    <p class="joke" id="joke"></p>
-    <div class="row">
-      <button id="again">🔄 Yana</button>
-      <button id="share">✈️ Telegramga</button>
-    </div>
-  </div>
-</div>
+<main>
+<section class="scr on" id="s1"><div class="gift">🎁</div><h1>Maxfiy Sovg'a</h1>
+<p>Kursdoshlar uchun sovg'a o'yini!<br>Ismingizni tanlang, taqdir sizga kimni topshirishini ko'rasiz ✨</p>
+<button class="btn" id="start">🎲 Boshlash</button></section>
+
+<section class="scr" id="s2"><h2>Siz kimsiz? 👀</h2><p>O'z ismingizni tanlang</p><div class="grid" id="grid"></div></section>
+
+<section class="scr" id="s3"><div class="gift" style="font-size:70px">🎁</div><div class="lbl">Taqdir tanlayapti… 🥁</div><div id="slot">✨</div></section>
+
+<section class="scr" id="s4"><div class="card"><div class="lbl">🎁 Siz sovg'a berasiz:</div><div class="rname" id="rname"></div>
+<div class="secret">🤫 Bu sir! Hech kimga aytmang</div>
+<button class="btn alt" id="share" style="margin-top:0">📨 Kursdoshlarni chaqirish</button></div></section>
+
+<section class="scr" id="s5"><div class="card"><div class="gift" style="font-size:64px">🔒</div><h2 id="hi"></h2>
+<p>Siz allaqachon o'z sovg'a oluvchingizni bilib olgansiz.</p>
+<button class="btn" id="again">👀 Natijani qayta ko'rish</button></div></section>
+</main>
+<div id="modal"><div class="card"><h2 id="mq"></h2><p>Tanlovni keyin o'zgartirib bo'lmaydi. Boshqa odamning ismini tanlamang 😉</p>
+<div class="row"><button class="btn alt" id="no">Yo'q</button><button class="btn" id="yes">Ha, men!</button></div></div></div>
 <script>
-const colors=["#ff3d81","#7c4dff","#00b894","#ff9f1a","#0984e3","#e17055"];
-const jokes=["Omadingiz bor ekan! 😎","Endi qochib qutulolmaysiz 😂","Taqdir shuni xohladi 🔮","Sovg'angizni unutmang! 🎁","Bu tasodif emas... 👀","Tayyorlaning, sizga qiyin bo'ladi 😈"];
-const $=id=>document.getElementById(id);
-let busy=false;
-function names(){return $("names").value.split(/[,\n]+/).map(s=>s.trim()).filter(Boolean)}
-function edgePoint(){
-  const w=innerWidth,h=innerHeight,s=Math.floor(Math.random()*4);
-  return s==0?[Math.random()*w,-80]:s==1?[w+80,Math.random()*h]:s==2?[Math.random()*w,h+80]:[-160,Math.random()*h];
-}
-function fly(n,delay){
-  const e=document.createElement("div");
-  e.className="fly";e.textContent=n;e.style.background=colors[Math.floor(Math.random()*colors.length)];
-  const [x,y]=edgePoint();
-  e.style.left="0";e.style.top="0";
-  document.body.appendChild(e);
-  const cx=innerWidth/2-40+(Math.random()*80-40),cy=innerHeight/2+(Math.random()*80-40);
-  const a=e.animate([
-    {transform:`translate(${x}px,${y}px) rotate(${Math.random()*90-45}deg) scale(.6)`,opacity:1},
-    {transform:`translate(${cx}px,${cy}px) rotate(${Math.random()*360}deg) scale(1.3)`,opacity:1,offset:.75},
-    {transform:`translate(${cx}px,${cy}px) scale(0)`,opacity:0}
-  ],{duration:1400+Math.random()*600,delay,easing:"ease-in-out"});
-  a.onfinish=()=>e.remove();
-}
-function start(){
-  const list=names();
-  if(list.length<2){alert("Kamida 2 ta ism yozing!");return}
-  if(busy)return;busy=true;
-  $("main").style.display="none";$("res").style.display="none";
-  let t=0;
-  for(let r=0;r<3;r++)list.forEach(n=>{fly(n,t);t+=120});
-  setTimeout(()=>{
-    const pick=list[Math.floor(Math.random()*list.length)];
-    $("who").textContent=pick;
-    $("joke").textContent=jokes[Math.floor(Math.random()*jokes.length)];
-    $("res").style.display="block";
-    boom();busy=false;
-  },t+1800);
-}
+const NAMES=["Inomjon", "Sevinch", "Gulira'no", "Jaloliddin", "Bunyod", "Madina", "Zarina", "Ulug'bek", "Mirshohid", "Feruza", "Feruzabonu", "Anbarjon", "Mumtoz Mahal Begim", "Muhammadaziz", "Ilyos"],ENC=[1, 7, 11, 5, 12, 10, 2, 4, 1, 4, 6, 10, 14, 0, 0],SALT="ks4908",PH=2920117273,N=NAMES.length;
+const APP="https://t.me/Kursdoshlar_sovgabot/play";
+const $=s=>document.querySelector(s),COL=["#ffd93d","#00e0a0","#ffffff","#ff9f43","#6cd4ff","#ff8fb8"];
+const tg=window.Telegram&&Telegram.WebApp;
+try{tg.ready();tg.expand();tg.setHeaderColor("#1b0b33");tg.setBackgroundColor("#1b0b33")}catch(e){}
+const hap=ok=>{try{ok?tg.HapticFeedback.notificationOccurred("success"):tg.HapticFeedback.impactOccurred("light")}catch(e){}};
+function H(s){let h=5381;for(const c of s)h=(h*33+c.charCodeAt(0))>>>0;return h}
+const recv=i=>(ENC[i]-H(SALT+NAMES[i])%N+N)%N;
+const show=id=>document.querySelectorAll(".scr").forEach(e=>e.classList.toggle("on",e.id==id));
+const LS={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},del:k=>{try{localStorage.removeItem(k)}catch(e){}}};
+// admin reset: t.me/Kursdoshlar_sovgabot/play?startapp=resetPIN
+try{const sp=tg.initDataUnsafe.start_param||"";if(sp.startsWith("reset")&&H("pin"+sp.slice(5))===PH)LS.del("ms_user")}catch(e){}
+// floating emojis
+setInterval(()=>{const e=document.createElement("div");e.className="fl";e.textContent=["🎁","✨","🎉","⭐","💜","🎀"][Math.floor(Math.random()*6)];e.style.left=Math.random()*100+"vw";e.style.fontSize=14+Math.random()*26+"px";e.style.animationDuration=7+Math.random()*7+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),14500)},700);
+// grid
+NAMES.forEach((n,i)=>{const b=document.createElement("button");b.className="chip";b.textContent=n;b.onclick=()=>{hap();ask(i)};$("#grid").appendChild(b)});
+let cur=-1;
+function ask(i){cur=i;$("#mq").textContent="Siz "+NAMES[i]+"misiz?";$("#modal").classList.add("on")}
+$("#no").onclick=()=>$("#modal").classList.remove("on");
+$("#yes").onclick=()=>{$("#modal").classList.remove("on");LS.set("ms_user",cur);run(cur)};
+$("#start").onclick=()=>{hap();show("s2")};
+$("#again").onclick=()=>result(+LS.get("ms_user"));
+$("#share").onclick=()=>{const u="https://t.me/share/url?url="+encodeURIComponent(APP)+"&text="+encodeURIComponent("🎁 Kursdoshlar Maxfiy Sovg'a o'yini! Kirib, kimga sovg'a berishingni bilib ol 👇");try{tg.openTelegramLink(u)}catch(e){window.open(u,"_blank")}};
+// fly bubbles
+function fly(n,delay){const e=document.createElement("div");e.className="fly";e.textContent=n;e.style.background=COL[Math.floor(Math.random()*COL.length)];document.body.appendChild(e);
+ const w=innerWidth,h=innerHeight,s=Math.floor(Math.random()*4);
+ const [x,y]=s==0?[Math.random()*w,-80]:s==1?[w+120,Math.random()*h]:s==2?[Math.random()*w,h+80]:[-200,Math.random()*h];
+ const cx=w/2-50+Math.random()*30,cy=h/2-20+Math.random()*40;
+ e.animate([{transform:`translate(${x}px,${y}px) rotate(${Math.random()*80-40}deg) scale(.6)`},{transform:`translate(${cx}px,${cy}px) rotate(${Math.random()*540}deg) scale(1.25)`,offset:.78},{transform:`translate(${cx}px,${cy}px) scale(0)`,opacity:0}],{duration:1500+Math.random()*500,delay,easing:"ease-in-out"}).onfinish=()=>e.remove()}
+function spin(i,done){let d=60,last="";const el=$("#slot");el.classList.remove("lock");
+ (function step(){if(d>400){el.textContent=NAMES[recv(i)];el.style.fontSize=NAMES[recv(i)].length>12?"1.8rem":"2.6rem";el.classList.add("lock");hap(1);return done()}
+ let n;do{n=NAMES[Math.floor(Math.random()*N)]}while(n===last||n===NAMES[i]);last=n;el.textContent=n;el.style.fontSize=n.length>12?"1.8rem":"2.6rem";hap();d*=1.12;setTimeout(step,d)})()}
+function run(i){show("s3");$("#slot").textContent="✨";
+ const others=NAMES.filter((_,k)=>k!=i);let t=0;
+ [...others,...others.slice(0,6)].forEach(n=>{fly(n,t);t+=130});
+ setTimeout(()=>spin(i,()=>setTimeout(()=>result(i),900)),t+1500)}
+function result(i){$("#rname").textContent=NAMES[recv(i)];$("#rname").style.fontSize=NAMES[recv(i)].length>12?"2.2rem":"3rem";show("s4");boom();setTimeout(boom,500);setTimeout(boom,1000)}
 // confetti
-const cv=$("cv"),ctx=cv.getContext("2d");let parts=[];
-function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener("resize",size);
-function boom(){
-  for(let i=0;i<160;i++)parts.push({x:innerWidth/2,y:innerHeight/2,vx:(Math.random()-.5)*16,vy:Math.random()*-14-2,c:colors[i%colors.length],s:4+Math.random()*6,l:120});
-  loop();
-}
-function loop(){
-  ctx.clearRect(0,0,cv.width,cv.height);
-  parts=parts.filter(p=>p.l>0);
-  parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.l--;ctx.fillStyle=p.c;ctx.fillRect(p.x,p.y,p.s,p.s)});
-  if(parts.length)requestAnimationFrame(loop);
-}
-$("go").onclick=start;
-$("again").onclick=()=>{$("res").style.display="none";start()};
-$("share").onclick=()=>{
-  const t=`Menga "${$("who").textContent}" tushdi! 😂 Sen ham sinab ko'r:`;
-  open("https://t.me/share/url?url="+encodeURIComponent(location.href.split("#")[0])+"&text="+encodeURIComponent(t),"_blank");
-};
-</script>
-</body>
-</html>
+const cv=$("#cv"),cx=cv.getContext("2d");let P=[];
+function sz(){cv.width=innerWidth;cv.height=innerHeight}sz();addEventListener("resize",sz);
+function boom(){const x=Math.random()*innerWidth*.6+innerWidth*.2,y=innerHeight*(.3+Math.random()*.2);for(let k=0;k<110;k++){const a=Math.random()*6.28,v=3+Math.random()*10;P.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-4,c:COL[k%COL.length],s:4+Math.random()*6,l:110})}if(P.length<=110)lp()}
+function lp(){cx.clearRect(0,0,cv.width,cv.height);P=P.filter(p=>p.l>0);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.3;p.vx*=.99;p.l--;cx.globalAlpha=Math.min(1,p.l/40);cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.s,p.s)});if(P.length)requestAnimationFrame(lp);else cx.clearRect(0,0,cv.width,cv.height)}
+// init
+const sv=LS.get("ms_user");if(sv!==null&&NAMES[+sv]){$("#hi").textContent="Salom, "+NAMES[+sv]+"! 👋";show("s5")}
+</script></body></html>
