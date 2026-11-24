@@ -21,9 +21,9 @@ p{color:#d9c8f0;margin:6px 0 16px;line-height:1.45}
 .btn.alt{background:#ffffff1c;box-shadow:none;animation:none;margin-top:10px;font-size:1rem;padding:13px}
 .btn:active{transform:scale(.96)}
 @keyframes pl{50%{transform:scale(1.04)}}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-.chip{border:2px solid #ffffff30;background:#ffffff14;color:#fff;font:inherit;font-weight:700;font-size:1.05rem;padding:14px 6px;border-radius:16px;cursor:pointer;backdrop-filter:blur(6px);transition:.15s}
-.chip:active{transform:scale(.93);background:var(--b)}
+.grid{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 10px;margin-top:16px}
+.chip{border:0;background:var(--c);color:#1b0b33;font:inherit;font-weight:800;font-size:1.02rem;padding:11px 16px;border-radius:30px;cursor:pointer;box-shadow:0 6px 18px #0006;transform:rotate(var(--r));animation:drift var(--d) ease-in-out var(--dl) infinite alternate}@keyframes drift{from{transform:translate(-5px,4px) rotate(var(--r))}to{transform:translate(6px,-7px) rotate(calc(var(--r)*-1))}}
+.chip:active{filter:brightness(.8);animation-play-state:paused}
 #slot{font-size:2.6rem;font-weight:900;min-height:1.3em;margin:14px 0;color:var(--y);text-shadow:0 0 30px #ffd93d99;position:relative;z-index:5}
 #slot.lock{animation:pop .6s cubic-bezier(.2,2,.4,1)}
 @keyframes pop{from{transform:scale(.3) rotate(-15deg)}}
@@ -46,7 +46,7 @@ canvas{position:fixed;inset:0;pointer-events:none;z-index:10}
 <p>Kursdoshlar uchun sovg'a o'yini!<br>Ismingizni tanlang, taqdir sizga kimni topshirishini ko'rasiz ✨</p>
 <button class="btn" id="start">🎲 Boshlash</button></section>
 
-<section class="scr" id="s2"><h2>Siz kimsiz? 👀</h2><p>O'z ismingizni tanlang</p><div class="grid" id="grid"></div></section>
+<section class="scr" id="s2"><h2>Siz kimsiz? 👀</h2><p>O'z ismingizni topib bosing</p><div class="grid" id="grid"></div></section>
 
 <section class="scr" id="s3"><div class="gift" style="font-size:70px">🎁</div><div class="lbl">Taqdir tanlayapti… 🥁</div><div id="slot">✨</div></section>
 
@@ -76,7 +76,7 @@ try{const sp=tg.initDataUnsafe.start_param||"";if(sp.startsWith("reset")&&H("pin
 // floating emojis
 setInterval(()=>{const e=document.createElement("div");e.className="fl";e.textContent=["🎁","✨","🎉","⭐","💜","🎀"][Math.floor(Math.random()*6)];e.style.left=Math.random()*100+"vw";e.style.fontSize=14+Math.random()*26+"px";e.style.animationDuration=7+Math.random()*7+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),14500)},700);
 // grid
-NAMES.forEach((n,i)=>{const b=document.createElement("button");b.className="chip";b.textContent=n;b.onclick=()=>{hap();ask(i)};$("#grid").appendChild(b)});
+[...NAMES.keys()].sort(()=>Math.random()-.5).forEach(i=>{const b=document.createElement("button");b.className="chip";b.textContent=NAMES[i];const s=b.style;s.setProperty("--c",COL[Math.floor(Math.random()*COL.length)]);s.setProperty("--r",(Math.random()*8-4)+"deg");s.setProperty("--d",(1.6+Math.random()*1.6)+"s");s.setProperty("--dl",(-Math.random()*3)+"s");b.onclick=()=>{hap();ask(i)};$("#grid").appendChild(b)});
 let cur=-1;
 function ask(i){cur=i;$("#mq").textContent="Siz "+NAMES[i]+"misiz?";$("#modal").classList.add("on")}
 $("#no").onclick=()=>$("#modal").classList.remove("on");
@@ -106,3 +106,4 @@ function lp(){cx.clearRect(0,0,cv.width,cv.height);P=P.filter(p=>p.l>0);P.forEac
 // init
 const sv=LS.get("ms_user");if(sv!==null&&NAMES[+sv]){$("#hi").textContent="Salom, "+NAMES[+sv]+"! 👋";show("s5")}
 </script></body></html>
+
