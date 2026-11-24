@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sizga kim tushdi? 🎁</title>
+<style>
+:root{--bg:#fff5e6;--bg2:#ffd6e8;--ink:#2b1b3d;--card:#ffffffcc;--accent:#ff3d81;--accent2:#7c4dff;--muted:#6b5b7b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1030;--bg2:#3a1450;--ink:#fff3fb;--card:#ffffff18;--accent:#ff5c9a;--accent2:#9d7bff;--muted:#c9b8dd}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg),var(--bg2));overflow:hidden;display:flex;align-items:center;justify-content:center}
+.wrap{width:min(92vw,440px);text-align:center;position:relative;z-index:2}
+h1{font-size:2rem;margin:0 0 6px;line-height:1.1}
+p.sub{margin:0 0 18px;color:var(--muted)}
+.card{background:var(--card);backdrop-filter:blur(8px);border-radius:24px;padding:18px;box-shadow:0 10px 40px #0002}
+textarea{width:100%;height:92px;border:2px dashed var(--accent2);border-radius:14px;padding:10px;font:inherit;background:transparent;color:var(--ink);resize:none}
+button{font:inherit;cursor:pointer;border:0}
+#go{margin-top:14px;width:100%;padding:18px;font-size:1.3rem;font-weight:800;color:#fff;border-radius:18px;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 8px 24px #ff3d8155;animation:pulse 1.6s infinite}
+#go:active{transform:scale(.96)}
+@keyframes pulse{50%{transform:scale(1.04)}}
+.fly{position:fixed;z-index:1;font-weight:800;font-size:1.4rem;padding:8px 14px;border-radius:30px;color:#fff;white-space:nowrap;pointer-events:none;box-shadow:0 4px 14px #0003}
+#res{display:none;margin-top:6px}
+#res .who{font-size:2.6rem;font-weight:900;margin:8px 0;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;animation:pop .6s cubic-bezier(.2,2,.4,1)}
+@keyframes pop{from{transform:scale(0) rotate(-20deg)}}
+.joke{color:var(--muted);margin:0 0 14px;min-height:1.4em}
+.row{display:flex;gap:8px}
+.row button{flex:1;padding:12px;border-radius:14px;font-weight:700;color:var(--ink);background:var(--card);border:2px solid var(--accent2)}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:3}
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div class="wrap">
+  <div id="main">
+    <h1>Sizga kim tushdi? 🎁</h1>
+    <p class="sub">Ismlarni yozing (vergul bilan) va tugmani bosing!</p>
+    <div class="card">
+      <textarea id="names">Ali, Vali, Sardor, Dilnoza, Madina, Jasur, Aziza, Bobur</textarea>
+      <button id="go">🎲 BOSING!</button>
+    </div>
+  </div>
+  <div id="res" class="card">
+    <div>Sizga tushdi... 🥁</div>
+    <div class="who" id="who"></div>
+    <p class="joke" id="joke"></p>
+    <div class="row">
+      <button id="again">🔄 Yana</button>
+      <button id="share">✈️ Telegramga</button>
+    </div>
+  </div>
+</div>
+<script>
+const colors=["#ff3d81","#7c4dff","#00b894","#ff9f1a","#0984e3","#e17055"];
+const jokes=["Omadingiz bor ekan! 😎","Endi qochib qutulolmaysiz 😂","Taqdir shuni xohladi 🔮","Sovg'angizni unutmang! 🎁","Bu tasodif emas... 👀","Tayyorlaning, sizga qiyin bo'ladi 😈"];
+const $=id=>document.getElementById(id);
+let busy=false;
+function names(){return $("names").value.split(/[,\n]+/).map(s=>s.trim()).filter(Boolean)}
+function edgePoint(){
+  const w=innerWidth,h=innerHeight,s=Math.floor(Math.random()*4);
+  return s==0?[Math.random()*w,-80]:s==1?[w+80,Math.random()*h]:s==2?[Math.random()*w,h+80]:[-160,Math.random()*h];
+}
+function fly(n,delay){
+  const e=document.createElement("div");
+  e.className="fly";e.textContent=n;e.style.background=colors[Math.floor(Math.random()*colors.length)];
+  const [x,y]=edgePoint();
+  e.style.left="0";e.style.top="0";
+  document.body.appendChild(e);
+  const cx=innerWidth/2-40+(Math.random()*80-40),cy=innerHeight/2+(Math.random()*80-40);
+  const a=e.animate([
+    {transform:`translate(${x}px,${y}px) rotate(${Math.random()*90-45}deg) scale(.6)`,opacity:1},
+    {transform:`translate(${cx}px,${cy}px) rotate(${Math.random()*360}deg) scale(1.3)`,opacity:1,offset:.75},
+    {transform:`translate(${cx}px,${cy}px) scale(0)`,opacity:0}
+  ],{duration:1400+Math.random()*600,delay,easing:"ease-in-out"});
+  a.onfinish=()=>e.remove();
+}
+function start(){
+  const list=names();
+  if(list.length<2){alert("Kamida 2 ta ism yozing!");return}
+  if(busy)return;busy=true;
+  $("main").style.display="none";$("res").style.display="none";
+  let t=0;
+  for(let r=0;r<3;r++)list.forEach(n=>{fly(n,t);t+=120});
+  setTimeout(()=>{
+    const pick=list[Math.floor(Math.random()*list.length)];
+    $("who").textContent=pick;
+    $("joke").textContent=jokes[Math.floor(Math.random()*jokes.length)];
+    $("res").style.display="block";
+    boom();busy=false;
+  },t+1800);
+}
+// confetti
+const cv=$("cv"),ctx=cv.getContext("2d");let parts=[];
+function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener("resize",size);
+function boom(){
+  for(let i=0;i<160;i++)parts.push({x:innerWidth/2,y:innerHeight/2,vx:(Math.random()-.5)*16,vy:Math.random()*-14-2,c:colors[i%colors.length],s:4+Math.random()*6,l:120});
+  loop();
+}
+function loop(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  parts=parts.filter(p=>p.l>0);
+  parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.l--;ctx.fillStyle=p.c;ctx.fillRect(p.x,p.y,p.s,p.s)});
+  if(parts.length)requestAnimationFrame(loop);
+}
+$("go").onclick=start;
+$("again").onclick=()=>{$("res").style.display="none";start()};
+$("share").onclick=()=>{
+  const t=`Menga "${$("who").textContent}" tushdi! 😂 Sen ham sinab ko'r:`;
+  open("https://t.me/share/url?url="+encodeURIComponent(location.href.split("#")[0])+"&text="+encodeURIComponent(t),"_blank");
+};
+</script>
+</body>
+</html>
